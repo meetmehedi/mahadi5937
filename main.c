@@ -1,125 +1,65 @@
-#include<stdio.h>
+//
+//  main.c
+//  max min
+//
+//  Created by Md. Mehedi Hasan on 23/4/24.
+//
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    float data;
+    struct node *next;
+};
 
 int main(void) {
+    struct node *current = NULL, *head = NULL, *previous = NULL;
+    int i, n;
+    float max = 0.0, min;
 
-    int a, b;
-    for(a=1; a<=7; a++) {
-        for(b=1; b<=9; b++) {
-            if(a==1|| a==7) {
-                if (b==1|| b==2|| b==3) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-            else if (a==2||a==3||a==4||a==5||a==6) {
-                if(b==2) {
-                    printf ("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-        }
-    printf("\n");}
-    printf("\n\n");
+    printf("Enter the number of nodes: ");
+    scanf("%d", &n);
 
-
-
-    int c, d;
-    for(c=1; c<=7; c++) {
-        for(d=1; d<=9; d++) {
-            if (c==1) {
-                if(d==2||d==4||d==6||d==8)
-                {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-            else if (c==2) {
-                if(d==1||d==5||d==9) {
-
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-
-            }
-            else if (c==3) {
-
-                if (d==1||d==9) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-
-            else if (c==4) {
-                if(d==2||d==8) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-
-            else if(c==5) {
-                if( d==3||d==7) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-            else if (c==6) {
-                if(d==5) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
+    for (i = 0; i < n; i++) {
+        current = malloc(sizeof(struct node));
+        if (current == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            return 1;
         }
 
-        printf("\n");
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%f", &current->data);
+
+        if (i == 0) {
+            head = current;
+            min = current->data;
+        } else {
+            previous->next = current;
+        }
+        previous = current;
     }
-    printf("\n\n");
+    current->next = NULL;
 
-    int e, f;
-    for(e=1; e<=7; e++) {
-        for(f=1; f<=9; f++) {
-            if(e==1||e==2||e==3||e==4||e==5) {
-                if(f==1||f==9) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-            else if(e==6) {
-                      if( f==2||f==8) {
-                        printf("#");
-                             }
-                             else {
-                             printf(" ");
-                             }
-                           }
-            else if(e==7) {
-                if (f==3||f==5||f==7) {
-                    printf("#");
-                }
-                else {
-                    printf(" ");
-                }
-            }
-        }
-        printf("\n");
+    max = head->data;
+
+    struct node *temp = head;
+    while (temp != NULL) {
+        if (max < temp->data)
+            max = temp->data;
+        if (min > temp->data)
+            min = temp->data;
+        temp = temp->next;
     }
-    
+
+    printf("Maximum value: %f\n", max);
+    printf("Minimum value: %f\n", min);
+
+    temp = head;
+    while (temp != NULL) {
+        struct node *next = temp->next;
+        free(temp);
+        temp = next;
+    }
+
     return 0;
 }
